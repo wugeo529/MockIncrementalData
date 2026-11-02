@@ -1,0 +1,13 @@
+node_modules/
+release/
+build/
+.venv/
+__pycache__/
+*.pyc
+*.private.json
+*.private.properties
+*.log
+coverage/
+.env
+.env.*
+!*.example.json

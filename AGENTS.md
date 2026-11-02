@@ -1,0 +1,3 @@
+# MockIncrementalData development
+
+Keep simulator logic independent of the consuming platform. Before changes read docs/ARCHITECTURE.md and docs/DEVELOPMENT.md. Preserve synthetic schema compatibility; never embed credentials or modify user databases outside an explicitly configured signal_sim_* database. Test Python engine and Node desktop behavior; verify packaged Windows startup after packaging changes. Other OS builds need their own runners. Do not claim unexecuted acceptance. Commit only scoped source/docs; distribution binaries belong in Releases, not Git. Push only when explicitly requested.

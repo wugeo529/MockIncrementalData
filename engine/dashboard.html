@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>信号数据模拟器</title><link rel="stylesheet" href="/dashboard.css"><script src="/dashboard.js" defer></script><script src="/connections.js" defer></script></head>
+<body><main>
+<header><div><h1>信号数据模拟器</h1><p>模拟终端位置、IP 会话与目标档案，写入指定的测试数据库。</p></div><button id="configure">数据库连接</button></header>
+<section class="controls"><div class="row"><label>模拟数据源<select id="profile" aria-label="模拟数据源"></select></label><span id="connection" class="badge">正在连接</span><span id="running" class="badge">读取状态</span><button id="refresh" class="end">刷新数据</button></div>
+<p id="scope" class="hint"></p><p id="endpoint" class="hint"></p>
+<div class="row"><label>发送间隔（秒）<input id="interval" type="number" value="5" min="0.2" max="86400" step="0.1"></label><label>本轮最多发送（批）<input id="ticks" type="number" value="120" min="1" max="1000000" step="1"></label><button id="start" class="primary">开始自动模拟</button><button id="stop">停止自动模拟</button><span id="progress" class="hint"></span></div>
+<p class="hint">每批同事务处理三张表；自动循环包含新增、修改和删除。停止后保留已提交数据，平台可继续消费。</p>
+<div class="row manual"><span>手动发送</span><button data-action="insert">新增一批</button><button data-action="update">修改最近记录</button><button data-action="delete" class="danger">删除最近一批</button></div>
+<p id="message" role="status" aria-live="polite"></p></section>
+<div class="counts"><section><span>GPS 位置观测</span><strong id="count-gps">—</strong></section><section><span>IP 会话记录</span><strong id="count-ipsession">—</strong></section><section><span>目标档案</span><strong id="count-target">—</strong></section></div>
+<section><div class="row"><h2>源表实际数据</h2><div class="tabs" role="group" aria-label="查看数据表"><button data-table="gps" aria-pressed="true">GPS</button><button data-table="ipsession" aria-pressed="false">IP 会话</button><button data-table="target" aria-pressed="false">目标档案</button></div><span id="updated" class="hint end"></span></div><p class="hint">每 3 秒读取最新 10 条；GPS、IP 按记录 ID 降序，目标档案按入库时间排序。全部为仿真数据。</p><div class="table-wrap"><table id="data"><thead></thead><tbody></tbody></table></div></section>
+<section><h2>已提交操作</h2><p class="hint">这里确认源库提交成功；平台消费进度请在“增量同步”和画布“持续增量”中查看。</p><div id="events" class="events">本次面板启动后尚未提交操作。</div></section>
+<footer>本程序只提交源表事务；采集、处理和下游消费由所连接的数据平台完成。MySQL 产生 Binlog 需要数据库已启用该功能。</footer>
+</main><section id="delete-dialog" hidden><h2>删除最近一批仿真数据？</h2><p>删除最近的 GPS、IP 记录及其目标档案。已配置的采集任务会继续同步这些删除。</p><div class="row"><button id="cancel-delete">取消</button><button id="confirm-delete" class="danger">确认删除</button></div></section>
+<section id="connection-dialog" hidden aria-label="数据库连接设置"><h2>数据库连接</h2>
+<form id="connection-form"><div class="connection-grid">
+<label>类型<select id="connection-engine"><option value="mysql">MySQL</option><option value="postgresql">PostgreSQL</option></select></label>
+<label>主机<input id="connection-host" value="127.0.0.1" required maxlength="255"></label>
+<label>端口<input id="connection-port" type="number" value="3306" min="1" max="65535" required></label>
+<label>专用数据库<input id="connection-database" value="signal_sim_demo" required pattern="signal_sim_[a-z0-9_]{1,40}"></label>
+<label>用户名<input id="connection-user" value="root" required maxlength="128"></label>
+<label>密码<input id="connection-password" type="password" autocomplete="off" maxlength="4096"></label>
+</div><p class="hint">数据库名以 signal_sim_ 开头，建议使用 signal_sim_demo。连接测试不建表；首次使用再点击“初始化模拟表”。</p>
+<label class="remember"><input id="remember-password" type="checkbox" checked>在本机加密记住密码</label>
+<p id="connection-message" role="status" aria-live="polite"></p>
+<div class="row"><button id="test-connection" type="button">测试连接</button><button id="save-connection" type="submit" class="primary">保存连接</button><button id="initialize" type="button">初始化模拟表</button><button id="close-connection" type="button">完成</button></div>
+<div id="initialize-confirm" hidden><p>将在当前保存的专用数据库创建三张模拟表并写入六组样例。已有完整三表只校验，不清空数据；不兼容结构会拒绝。</p><div class="row"><button id="confirm-initialize" type="button" class="primary">确认初始化</button><button id="cancel-initialize" type="button">取消</button></div></div>
+</form></section></body></html>

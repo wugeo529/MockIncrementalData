@@ -1,0 +1,14 @@
+{
+  "engine": "mysql",
+  "passed": true,
+  "checks": [
+    "initialize / preserve existing / INSERT / UPDATE / DELETE / bounded auto / active stop",
+    "HTTP connection test/save / no secret response / wrong nonce rejected",
+    "foreign table initialization rejected / existing records preserved"
+  ],
+  "finalCounts": {
+    "gps": 9,
+    "ipsession": 9,
+    "target": 6
+  }
+}

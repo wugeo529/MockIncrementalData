@@ -1,0 +1,8 @@
+{
+  "engine": "postgresql",
+  "host": "127.0.0.1",
+  "port": 15437,
+  "database": "signal_sim_demo",
+  "user": "signal_sim",
+  "password_env": "SIGNAL_SIM_DB_PASSWORD"
+}
