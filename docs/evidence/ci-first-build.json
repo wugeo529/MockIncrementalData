@@ -1,0 +1,72 @@
+{
+  "commit": "a1f74db260516a1cbb696b1c151350bc8ef473bd",
+  "run": "https://github.com/wugeo529/MockIncrementalData/actions/runs/41402659925",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "name": "postgres-native",
+      "id": 125137655345,
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/wugeo529/MockIncrementalData/actions/runs/41402659925/job/125137655345",
+      "started_at": "2026-11-02T06:52:20Z",
+      "completed_at": "2026-11-02T06:52:51Z"
+    },
+    {
+      "name": "desktop (ubuntu-latest, linux)",
+      "id": 125137655601,
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/wugeo529/MockIncrementalData/actions/runs/41402659925/job/125137655601",
+      "started_at": "2026-11-02T06:52:20Z",
+      "completed_at": "2026-11-02T06:55:46Z"
+    },
+    {
+      "name": "desktop (windows-latest, win)",
+      "id": 125137655619,
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/wugeo529/MockIncrementalData/actions/runs/41402659925/job/125137655619",
+      "started_at": "2026-11-02T06:52:21Z",
+      "completed_at": "2026-11-02T06:56:11Z"
+    },
+    {
+      "name": "desktop (macos-latest, mac)",
+      "id": 125137655777,
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/wugeo529/MockIncrementalData/actions/runs/41402659925/job/125137655777",
+      "started_at": "2026-11-02T06:52:20Z",
+      "completed_at": "2026-11-02T06:54:13Z"
+    },
+    {
+      "name": "mysql-native",
+      "id": 125137655802,
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/wugeo529/MockIncrementalData/actions/runs/41402659925/job/125137655802",
+      "started_at": "2026-11-02T06:52:20Z",
+      "completed_at": "2026-11-02T06:52:54Z"
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "MockIncrementalData-linux",
+      "id": 13122466630,
+      "size_in_bytes": 309734480,
+      "expired": false
+    },
+    {
+      "name": "MockIncrementalData-win",
+      "id": 13121668975,
+      "size_in_bytes": 303824217,
+      "expired": false
+    },
+    {
+      "name": "MockIncrementalData-mac",
+      "id": 13121623774,
+      "size_in_bytes": 265553469,
+      "expired": false
+    }
+  ]
+}

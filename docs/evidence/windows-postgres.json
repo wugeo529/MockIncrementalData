@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "engine": "postgresql",
+  "executable": "MockIncrementalData.exe",
+  "date": "2026-11-02T07:05:16.651Z",
+  "checks": [
+    "packaged startup without Python/Node PATH; renderer isolation; test/save/init/cancel; unsaved target guard",
+    "real three-table INSERT/UPDATE/DELETE; delete cancel/confirm; all table tabs; bounded auto; active stop; refresh; OS-encrypted settings",
+    "restart restores encrypted connection; backend stops after window exit twice"
+  ]
+}

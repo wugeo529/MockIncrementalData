@@ -11,10 +11,13 @@ async function run(){
   const [executable,configPath,reportDirectory]=process.argv.slice(2);
   if(!executable||!configPath||!reportDirectory)throw Error('Usage: node scripts/desktop_acceptance.cjs <exe> <private config> <report directory>');
   const config={...JSON.parse(fs.readFileSync(configPath,'utf8').replace(/^\uFEFF/,'')),database:'signal_sim_accept_'+crypto.randomBytes(8).toString('hex')};
-  assert.equal(config.engine,'mysql');
+  assert.ok(['mysql','postgresql'].includes(config.engine));
   const python=process.env.PYTHON_EXE || 'python';
   const fixture=(drop=false)=>execFileSync(python,['-c',
-    'import sys,json,pymysql; c=json.load(sys.stdin); db=c.pop("database"); c.pop("engine",None); assert db.startswith("signal_sim_accept_") and len(db)==34; conn=pymysql.connect(**c,autocommit=True); cur=conn.cursor(); cur.execute(("DROP DATABASE IF EXISTS `" if '+(drop?'True':'False')+' else "CREATE DATABASE `")+db+"`"); conn.close()'],{input:JSON.stringify(config),windowsHide:true,stdio:['pipe','pipe','pipe']});
+    'import sys,json; c=json.load(sys.stdin); db=c.pop("database"); engine=c.pop("engine"); assert db.startswith("signal_sim_accept_") and len(db)==34\n'+
+    'if engine=="mysql":\n import pymysql; conn=pymysql.connect(**c,autocommit=True); quote="`"\n'+
+    'else:\n import psycopg2; conn=psycopg2.connect(**c,dbname="postgres"); conn.autocommit=True; quote=chr(34)\n'+
+    'cur=conn.cursor(); cur.execute(("DROP DATABASE IF EXISTS " if '+(drop?'True':'False')+' else "CREATE DATABASE ")+quote+db+quote); conn.close()'],{input:JSON.stringify(config),windowsHide:true,stdio:['pipe','pipe','pipe']});
   const results=[];let application,settings,previous,base;
   fs.mkdirSync(reportDirectory,{recursive:true});
   fixture();
@@ -33,6 +36,7 @@ async function run(){
     const preferences=await application.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].webContents.getLastWebPreferences());
     assert.equal(preferences.sandbox,true);assert.equal(preferences.contextIsolation,true);assert.equal(preferences.nodeIntegration,false);
     await page.locator('#configure').click();
+    await page.locator('#connection-engine').selectOption(config.engine);
     for(const field of ['host','port','database','user','password'])await page.locator('#connection-'+field).fill(String(config[field]));
     await page.locator('#test-connection').click();
     await page.locator('#connection-message').filter({hasText:'连接成功'}).waitFor();
@@ -64,12 +68,13 @@ async function run(){
     await application.close();application=null;
     await assert.rejects(fetch(base+'/api/bootstrap'));
     page=await launch();base=new URL(page.url()).origin;
+    await page.locator('#profile').selectOption(config.engine);
     await page.waitForFunction(()=>document.querySelector('#connection').textContent==='源库已连接');
     assert.ok((await page.locator('#endpoint').textContent()).includes(config.database));
     await application.close();application=null;
     await assert.rejects(fetch(base+'/api/bootstrap'));
     results.push('restart restores encrypted connection; backend stops after window exit twice');
-    const report={passed:true,executable:path.basename(executable),date:new Date().toISOString(),checks:results};
+    const report={passed:true,engine:config.engine,executable:path.basename(executable),date:new Date().toISOString(),checks:results};
     fs.writeFileSync(path.join(reportDirectory,'windows-desktop-results.json'),JSON.stringify(report,null,2));
     console.log(JSON.stringify(report));
   }finally{

@@ -6,7 +6,7 @@
 - `engine/signal_source.py` 修改字段或生成规则时，同步更新DDL/schema.json、字段说明及测试。
 - `python -m unittest discover -s engine -p "test_*.py"`，`npm test`。
 - 真实数据库回归：`python scripts/native_acceptance.py --config <本机私有JSON路径>`。脚本仅创建自己随机命名的signal_sim_accept_*临时库并在完成后删除，不能以此测试现有业务库。
-- 桌面回归：安装Playwright到独立测试工具环境后，设置PLAYWRIGHT_MODULE为其模块绝对路径、PYTHON_EXE为测试用Python，运行`node scripts/desktop_acceptance.cjs <打包exe路径> <私有MySQL配置JSON> <证据目录>`。测试用Python只建立/清理临时数据库，启动的客户端使用自己的引擎；测试会暂存并恢复原本机连接设置。请关闭已有模拟器客户端再测试。
+- 桌面回归：安装Playwright到独立测试工具环境后，设置PLAYWRIGHT_MODULE为其模块绝对路径、PYTHON_EXE为测试用Python，运行`node scripts/desktop_acceptance.cjs <打包exe路径> <私有MySQL或PG配置JSON> <证据目录>`。测试用Python只建立/清理临时数据库，启动的客户端使用自己的引擎；测试会暂存并恢复原本机连接设置。请关闭已有模拟器客户端再测试。
 - `python scripts/build-engine.py` 在当前操作系统构建原生引擎。
 - `npm run dist:win` / `dist:linux` / `dist:mac`。各系统分别构建，不承诺跨系统执行相同二进制。
 - Windows本地依赖可缓存安装，所有构建工具只用于开发电脑；最终安装包包含所需运行时。

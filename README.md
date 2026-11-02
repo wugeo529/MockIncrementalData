@@ -4,6 +4,8 @@
 
 ## 快速使用
 
+下载：[Windows免安装ZIP](https://github.com/wugeo529/MockIncrementalData/releases/download/v0.1.0/MockIncrementalData-0.1.0-win-x64.zip) · [Windows安装程序](https://github.com/wugeo529/MockIncrementalData/releases/download/v0.1.0/MockIncrementalData-0.1.0-Setup-x64.exe) · [版本与校验文件](https://github.com/wugeo529/MockIncrementalData/releases/tag/v0.1.0)。
+
 1. 下载对应系统的安装包或 ZIP。Windows ZIP 解压完整文件夹后，双击 `MockIncrementalData.exe`；或运行 `Setup` 安装程序。
 2. 本机先准备好运行中的 MySQL。打开应用，点右上 **数据库连接**。
 3. 类型选 MySQL；本机通常填 `127.0.0.1`、`3306`，数据库填 **`signal_sim_demo`**，账号密码填你自己的数据库账号。

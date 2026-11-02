@@ -1,7 +1,8 @@
 {
   "passed": true,
+  "engine": "mysql",
   "executable": "MockIncrementalData.exe",
-  "date": "2026-11-02T06:47:35.707Z",
+  "date": "2026-11-02T07:06:12.378Z",
   "checks": [
     "packaged startup without Python/Node PATH; renderer isolation; test/save/init/cancel; unsaved target guard",
     "real three-table INSERT/UPDATE/DELETE; delete cancel/confirm; all table tabs; bounded auto; active stop; refresh; OS-encrypted settings",
