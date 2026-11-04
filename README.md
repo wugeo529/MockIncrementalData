@@ -27,7 +27,7 @@
 
 模拟器提交普通数据库事务。MySQL 开启 Binlog 后会由数据库产生真实日志；消费系统再自行采集、加工和发布。本程序不伪造 Binlog，不直接写入下游 RAW、湖表或本体。
 
-PostgreSQL 也可作源端模拟；这不代表任何消费平台已经支持 PostgreSQL WAL 增量采集。两种源结构的差异见 [字段结构](docs/SCHEMA.md)。
+PostgreSQL 也可作源端模拟。2026-11-04 已补充 PG14 消费平台的外部本地验证记录；该验证使用独立 fixture，未通过本模拟器桌面生成数据，不等于本模拟器三表到下游的联合验收。见 [PostgreSQL 兼容性与边界](docs/POSTGRESQL-COMPATIBILITY.md)。两种源结构的差异见 [字段结构](docs/SCHEMA.md)。
 
 ## 安装包与适用范围
 
